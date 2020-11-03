@@ -1,0 +1,53 @@
+//C++ SOLUTION
+
+class Solution {
+public:
+    int maxPower(string s) {
+        
+        int length=s.size();
+        int max_length=0;
+        int i,j=0;
+        for( i=0;i<length;i++){
+            
+            if(s[i]==s[j]){
+                continue;
+            }
+            else{
+                max_length=max(i-j,max_length);
+                j=i;
+            }
+            
+        }
+        
+        max_length=max(i-j,max_length);
+        return max_length;
+        
+        
+        
+    }
+};
+
+
+//JAVA SOLUTION
+
+class Solution {
+    public int maxPower(String s) {
+        int length=s.length();
+        int max_length=0;
+        int i,j=0;
+        for( i=0;i<length;i++){
+            
+            if(s.charAt(i)==s.charAt(j)){
+                continue;
+            }
+            else{
+                max_length=Math.max(i-j,max_length);
+                j=i;
+            }
+            
+        }
+        
+        max_length=Math.max(i-j,max_length);
+        return max_length;
+    }
+}
