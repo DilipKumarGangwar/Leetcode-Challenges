@@ -1,0 +1,75 @@
+//C++ SOLUTION
+
+int findSum(int mid,vector<int>& nums){
+    int sum=0;
+    for(auto it=nums.begin();it!=nums.end();it++)
+             sum=sum+ceil((float)(*it)/mid);
+    return sum;       
+    
+}
+class Solution {
+public:
+    int smallestDivisor(vector<int>& nums, int threshold)     {
+       int maximum=*max_element(nums.begin(),nums.end());
+        
+       int left=1,right=maximum,sum,divisor;
+       while(left<=right){
+         int mid=left +(right-left)/2;
+         sum=findSum(mid,nums); 
+           
+         if(sum<=threshold){
+            divisor=mid;
+            right=mid-1;
+         }
+         else
+            left=mid+1; 
+       } 
+       return divisor;
+    }
+};
+
+
+
+
+
+//JAVA SOLUTION
+
+
+class Solution {
+    
+  int maximum(int[] nums){
+    int n= nums.length;
+    int max=nums[0];
+    for(int i=1;i<n;i++){
+        if (nums[i] > max) 
+            max = nums[i]; 
+    }
+    return max;
+   }
+    
+   int findSum(int mid,int[] nums){
+    int sum=0;
+    int n= nums.length;
+    for(int i=0;i<n;i++)
+       sum=sum+(int)Math.ceil((float)nums[i]/mid);
+    return sum;       
+    
+   }
+    public int smallestDivisor(int[] nums, int threshold) {
+       int max=maximum(nums);      
+       int left=1,right=max,sum,divisor=0;
+       while(left<=right){
+         int mid=left +(right-left)/2;
+         sum=findSum(mid,nums); 
+           
+         if(sum<=threshold){
+            divisor=mid;
+            right=mid-1;
+         }
+         else
+            left=mid+1; 
+       } 
+       return divisor;
+        
+    }
+}
