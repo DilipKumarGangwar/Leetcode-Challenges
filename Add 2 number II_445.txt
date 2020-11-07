@@ -1,0 +1,224 @@
+//C++ SOLUTION
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+    void swapPointer(ListNode **a,ListNode **b){
+        ListNode * t=*a;
+        *a=*b;
+        *b=t;        
+    }
+
+void addEqualLinkList(ListNode *l1,ListNode* l2,int *carry,ListNode ** result){
+    
+    int sum=0;
+    if(l1==NULL)
+      return;
+    addEqualLinkList(l1->next,l2->next,carry,result); 
+    
+    ListNode *p=new ListNode();
+    sum=*carry+(l1->val+l2->val);
+    p->val=sum%10;
+    *carry=sum/10;
+    p->next=*result;
+    (*result)=p;
+    
+   
+} 
+
+void addRemainingLinkList(ListNode *l1,ListNode* temp,int *carry,ListNode ** result){
+    int sum=0;
+    if(l1==temp)
+        return;
+    addRemainingLinkList(l1->next,temp,carry,result);
+    
+    ListNode *p=new ListNode();
+    sum=*carry+(l1->val);
+    p->val=sum%10;
+    cout<<p->val<<" ";
+    *carry=sum/10;
+    p->next=*result;
+    (*result)=p;
+    
+    
+}  
+    
+    
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        
+        int size1=0,size2=0,carry=0,diff=0;
+        ListNode* result=NULL,*temp=NULL;
+        
+        //find the sizes of link list
+        temp=l1;
+        while(temp!=NULL){
+            size1++;
+            temp=temp->next;
+            
+        }
+        temp=l2;
+        while(temp!=NULL){
+            size2++;
+            temp=temp->next;
+            
+        }
+     
+        if(size1==size2){            
+           addEqualLinkList(l1,l2,&carry,&result);  
+           
+        }
+        
+        else{
+            //shift in larger link list,l1 always point to larger list
+            if(size1<size2){
+               swapPointer(&l1,&l2);   
+            }
+            diff=abs(size1-size2);
+              
+            //Shift pointer in larger list    
+            temp=l1;
+            while(diff!=0){
+                temp=temp->next;
+                diff--;
+            } 
+            addEqualLinkList(temp,l2,&carry,&result); 
+            
+            //add remaining elements
+            addRemainingLinkList(l1,temp,&carry,&result);
+        }//end of else
+         
+      if(carry!=0){
+           //create a node and add this leftover carry
+           ListNode* p=new ListNode(carry);
+           p->val=carry;
+           p->next=result;
+           result=p;
+      }  
+      return result;
+        
+    }
+};
+
+
+**************************************************************************
+
+//JAVA SOLUTIONS
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    
+    ListNode result;
+    int carry;
+    
+  void addEqualLinkList(ListNode l1,ListNode l2){
+    
+    int sum=0;
+    if(l1==null)
+      return;
+    addEqualLinkList(l1.next,l2.next); 
+    
+    ListNode p=new ListNode();
+    sum=carry+(l1.val+l2.val);
+        
+    p.val=sum%10;
+    carry=sum/10;
+    p.next=result;
+    result=p;
+    
+   
+} 
+
+void addRemainingLinkList(ListNode l1,ListNode temp){
+    int sum=0;
+    if(l1==temp)
+        return;
+    addRemainingLinkList(l1.next,temp);
+    
+    ListNode p=new ListNode();
+    sum=carry+(l1.val);
+    p.val=sum%10;
+    carry=sum/10;
+    p.next=result;
+    result=p;
+    
+    
+}  
+    
+    
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int size1=0,size2=0,diff=0;
+        ListNode temp=null;
+        
+        //find the sizes of link list
+        temp=l1;
+        while(temp!=null){
+            size1++;
+            temp=temp.next;
+            
+        }
+        temp=l2;
+        while(temp!=null){
+            size2++;
+            temp=temp.next;
+            
+        }
+      
+        if(size1==size2){            
+           addEqualLinkList(l1,l2);  
+           
+        }
+        
+        else{
+            //shift in larger link list,l1 always point to larger list
+            if(size1<size2){
+               ListNode t=l1;
+               l1=l2;
+               l2=t;   
+            }
+            System.out.println(l1.val+" "+l2.val);
+            diff=Math.abs(size1-size2);
+           
+            //Shift pointer in larger list    
+            temp=l1;
+            while(diff!=0){
+                temp=temp.next;
+                diff--;
+            } 
+            
+            addEqualLinkList(temp,l2); 
+            
+            //add remaining elements
+            addRemainingLinkList(l1,temp);
+        }//end of else
+         
+      if(carry!=0){
+           //create a node and add this leftover carry
+           ListNode p=new ListNode(carry);
+           p.val=carry;
+           p.next=result;
+           result=p;
+      }  
+      return result;
+        
+    }
+        
+    
+}
