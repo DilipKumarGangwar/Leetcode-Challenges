@@ -1,0 +1,73 @@
+//C++ SOLUTION
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+ 
+int findTiltUtil(TreeNode * root,int &total_tilt){
+        if(root==NULL)
+            return 0;
+        int x=findTiltUtil(root->left,total_tilt);
+        int y=findTiltUtil(root->right,total_tilt);
+        total_tilt+=abs(x-y);
+        return  x+y+root->val;
+}
+class Solution {
+public:
+    int findTilt(TreeNode* root) {
+        int total_tilt=0;
+        findTiltUtil(root,total_tilt);
+        
+        return total_tilt; 
+           
+    }
+};
+
+************************
+//JAVA SOLUTION
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int total_tilt = 0;
+
+    int findTiltUtil(TreeNode root) {
+        if (root == null)
+            return 0;
+
+        int x = this.findTiltUtil(root.left);
+        int y = this.findTiltUtil(root.right);
+        //calculating total_tilt
+        this.total_tilt +=  Math.abs(x - y);  
+
+        // the sum of values of left ,right subtree +current node.
+        return root.val + x + y;
+    }
+
+    public int findTilt(TreeNode root) {
+        
+        findTiltUtil(root);
+        return total_tilt;
+    }
+}
