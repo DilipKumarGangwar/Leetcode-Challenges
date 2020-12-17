@@ -1,0 +1,77 @@
+//Problem Link: https://leetcode.com/problems/4sum-ii/
+
+//C++ Solution
+
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        
+        unordered_map<int,int> frequency;
+        int n=A.size();
+        int totalcount=0;
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                int sum=A[i]+B[j];
+                frequency[sum]++;
+                
+            }
+        }
+        
+       
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                int sum=C[i]+D[j];
+                auto it=frequency.find(-sum);
+                if(it!=frequency.end()){
+                       totalcount+= (it->second);    
+                    
+                }
+                
+            }
+        }
+        
+        return totalcount;
+        
+        
+        
+        
+    }
+};
+
+
+
+//Java Solution
+
+class Solution {
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+      
+        Map<Integer,Integer> frequency= new HashMap<Integer,Integer>(); 
+        int n=A.length;
+        int totalcount=0;
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                int sum=A[i]+B[j];
+                frequency.put(sum,frequency.getOrDefault(sum,0)+1);
+                
+            }
+        }
+        
+     
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                int sum=C[i]+D[j];
+                //Commented part is also ok   instead of     totalcount+=frequency.getOrDefault(-sum,0);
+                // if(frequency.containsKey(-sum))
+                //    totalcount+=frequency.get(-sum); //value corresponding to -sum
+                                           
+                   totalcount+=frequency.getOrDefault(-sum,0);
+                
+            }
+        }
+        
+        return totalcount;
+        
+    }
+}
