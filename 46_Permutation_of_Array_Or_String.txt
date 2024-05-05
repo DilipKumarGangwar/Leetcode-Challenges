@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 //Problem : Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+=======
+//Problem #46 : Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+>>>>>>> c3f7b2efff93f9b6e877ae00180a2d704dc13796
 
 //Leetcode Problem Link: https://leetcode.com/problems/permutations/description/
 
 
+<<<<<<< HEAD
 class Solution {
 public:
    
@@ -30,6 +35,33 @@ public:
     vector<vector<int>> permute(vector<int>& nums) {
       
        // to store all the permutations  
+=======
+void permuteUtil(vector<int>& a,int pos,int end, vector<vector<int>> &finalans) {
+         
+    // if we reached last elements, then no need to go further as last element is itself at right position
+    if(pos == end)
+    {
+        finalans.push_back(a);
+        return;
+    }
+
+    for(int i=pos;i<=end;i++) 
+    {
+            swap(a[pos],a[i]);   //finding permutations
+            permuteUtil(a,pos+1,end,finalans);
+            //swapping as to get the previous array content
+            swap(a[pos],a[i]);    //backtracting
+    }
+       
+}
+
+class Solution {
+public:
+   
+      vector<vector<int>> permute(vector<int>& nums) {
+      
+        // to store all the permutations  
+>>>>>>> c3f7b2efff93f9b6e877ae00180a2d704dc13796
         vector<vector<int>> finalans;
 
         int n= nums.size();

@@ -1,0 +1,47 @@
+//Problem #47 : Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
+
+//Leetcode Problem Link: https://leetcode.com/problems/permutations-ii/
+
+
+void permuteUniqueUtil(vector<int>& a,int pos,int end, vector<vector<int>> &finalans) {
+         
+    // if we reached last elements, then no need to go further as last element is itself at right position
+    if(pos == end)
+    {
+        finalans.push_back(a);
+        return;
+    }
+
+    unordered_set<int> s;
+    for(int i=pos;i<=end;i++) 
+    {
+            //if ith element is present in set, then we shoould not proceed with this permutation,
+            //otherwise insert ith element in set and proceed with the permutation logic 
+            if(s.find(a[i]) != s.end())
+              continue;
+            s.insert(a[i]);
+
+            swap(a[pos],a[i]);   //finding permutations
+            permuteUniqueUtil(a,pos+1,end,finalans);
+
+            //swapping as to get the previous array content
+            swap(a[pos],a[i]);    //backtracting
+    }
+       
+}
+
+
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& a) {
+        
+        int n=a.size();
+      
+        
+        vector<vector<int>> allPermutations;
+       
+        permuteUniqueUtil(a,0,n-1,allPermutations);
+        return allPermutations;
+        
+    }
+};
